@@ -1,0 +1,1485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Losing a Language | How Belarusian Disappeared from Daily Life but Remained Central to Identity</title>
+
+  <meta name="description" content="An interactive data story exploring the decline of Belarusian in everyday life through census data, education statistics, Google Trends, and cultural repression.">
+
+  <meta property="og:title" content="Losing a Language">
+  <meta property="og:description" content="An interactive data story exploring the decline of Belarusian in everyday life through census data, education statistics, Google Trends, and cultural repression.">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="images/cover.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Losing a Language">
+  <meta name="twitter:description" content="An interactive data story about the decline of Belarusian in everyday life and its role in national identity.">
+  <meta name="twitter:image" content="images/cover.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!--
+    TYPOGRAPHY NOTE:
+    This uses Google Fonts for a more polished editorial look.
+    If your publishing system blocks external fonts, remove this link and the page will fall back to system fonts.
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600;6..72,700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #ffffff;
+      --surface: #fafafa;
+      --text: #111111;
+      --muted: #6b6b6b;
+      --soft-muted: #9a9a9a;
+      --red: #b31b1b;
+      --red-dark: #7f1010;
+      --border: #e8e8e8;
+      --shadow: 0 16px 50px rgba(0, 0, 0, 0.06);
+      --max-width: 1320px;
+      --text-width: 820px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Newsreader", Georgia, serif;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    main {
+      overflow: clip;
+    }
+
+    .container {
+      width: min(100%, var(--max-width));
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    h1,
+    h2,
+    h3,
+    .year-label {
+      font-family: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    p {
+  font-size: clamp(1.2rem, 1.35vw, 1.4rem);
+  line-height: 1.8;
+}
+
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.85em;
+    }
+
+
+    /* =============================
+       FULL-WIDTH TEXT SECTIONS
+    ============================= */
+
+    .text-section {
+  padding: 40px 0 40px;
+}
+
+    .text-inner {
+      max-width: var(--text-width);
+    }
+
+    .text-inner.centered {
+      margin: 0 auto;
+    }
+
+.text-inner h2 {
+  margin-bottom: 24px;
+  font-size: clamp(1.8rem, 3vw, 3rem);
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+}
+
+    .text-inner p + p {
+      margin-top: 22px;
+    }
+
+    .text-inner p {
+      color: #242424;
+    }
+
+    .chapter-divider {
+      display: flex;
+      justify-content: center;
+      padding: 36px 0;
+    }
+
+    .chapter-divider span {
+      width: 124px;
+      height: 2px;
+      background: var(--red);
+    }
+
+    /* =============================
+       TIMELINE SCROLLYTELLING
+       Important structure:
+       - Each .timeline-year has a sticky left column.
+       - Each year has exactly three .timeline-step blocks.
+       - Each .timeline-step is viewport-height so the text appears one at a time while scrolling.
+    ============================= */
+
+    .timeline {
+      padding: 20px 0 110px;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .timeline-intro {
+      max-width: 900px;
+      margin-bottom: 70px;
+    }
+
+    .timeline-intro h2 {
+      margin-bottom: 20px;
+      font-size: clamp(2.1rem, 4.8vw, 4.4rem);
+      line-height: 1;
+      letter-spacing: -0.055em;
+    }
+
+    .timeline-intro p {
+      color: var(--muted);
+      max-width: 760px;
+    }
+
+    .timeline-year {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(260px, 330px) minmax(0, 1fr);
+      gap: clamp(42px, 7vw, 96px);
+      border-top: 1px solid var(--border);
+    }
+
+    .timeline-year:first-of-type {
+      border-top: 0;
+    }
+
+    .year-sticky {
+      position: sticky;
+      top: 28px;
+      align-self: start;
+      height: fit-content;
+      padding: 52px 0 48px;
+    }
+
+    .year-label {
+  margin-bottom: 20px;
+  color: var(--red);
+  font-size: clamp(2.4rem, 3.5vw, 3.8rem);
+  font-weight: 900;
+  line-height: 0.9;
+  letter-spacing: -0.06em;
+}
+
+    .timeline-image {
+      margin: 0;
+    }
+
+
+    .timeline-image figcaption {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 0.86rem;
+      line-height: 1.4;
+    }
+
+    .timeline-scroll {
+      position: relative;
+    }
+
+    .timeline-step {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 48px 0;
+    }
+
+    .step-card {
+      max-width: 760px;
+      padding: 0 0 0 clamp(0px, 2vw, 26px);
+    }
+
+    .step-card h3 {
+      margin-bottom: 18px;
+      color: var(--red);
+      font-size: 0.78rem;
+      font-weight: 850;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .step-card p {
+  font-family: "Newsreader", serif;
+  font-size: 1.15rem;
+  line-height: 1.8;
+  letter-spacing: 0;
+  color: #222;
+  max-width: 42rem;
+}
+    .step-card p + p {
+      margin-top: 24px;
+    }
+
+    .step-card img {
+  margin-top: 40px;
+}
+
+    /* =============================
+       GRAPH SCROLLYTELLING SECTIONS
+    ============================= */
+
+    .graph-section {
+      padding: 118px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .graph-section:nth-of-type(even) {
+      background: var(--surface);
+    }
+
+    .graph-header {
+      max-width: 920px;
+      margin-bottom: 56px;
+    }
+
+    .graph-layout {
+      display: grid;
+      grid-template-columns: minmax(310px, 440px) minmax(520px, 1fr);
+      gap: clamp(42px, 6.5vw, 92px);
+      align-items: start;
+    }
+
+    .scroll-column {
+      display: grid;
+      gap: 0;
+    }
+
+    .scroll-card {
+      min-height: 82vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 38px 0;
+    }
+
+    .scroll-card h3 {
+      margin-bottom: 16px;
+      color: var(--red);
+      font-size: 0.78rem;
+      font-weight: 850;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .scroll-card p {
+      font-size: clamp(1.25rem, 1.75vw, 1.65rem);
+      line-height: 1.45;
+      color: #202020;
+    }
+
+    .scroll-card figure {
+  margin-top: 40px;
+}
+
+    .graph-sticky {
+  position: sticky;
+  top: 120px;
+  align-self: start;
+}
+
+    .graph-frame {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+    .graph-frame iframe {
+  border-radius: 0;
+}
+
+
+    .graph-caption {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.45;
+    }
+
+    .graph-break{
+  padding: 6rem 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: #fff;
+}
+
+.graph-break-inner{
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+.break-lead{
+  font-family:"Newsreader", serif;
+  font-size:clamp(2rem,3vw,2.8rem);
+  line-height:1.2;
+  font-weight:400;
+  max-width:700px;
+  margin-bottom:2rem;
+}
+
+.graph-break-inner p:not(.break-lead){
+  font-family: "Newsreader", serif;
+  font-size: 1.25rem;
+  line-height: 1.8;
+  color: #222;
+}
+
+.graph-break-inner p + p{
+  margin-top: 1rem;
+}
+
+.section-intro{
+  max-width: 760px;
+  margin: 0 auto 1rem;
+}
+
+.section-intro p{
+  font-family: "Newsreader", serif;
+  font-size: 1.3rem;
+  line-height: 1.8;
+  color: #222;
+  margin-bottom: 1.5rem;
+}
+
+
+.hero-header{
+  position:relative;
+
+  width:100vw;
+  height:65vh;
+
+  min-height:500px;
+  max-height:750px;
+
+  margin-left:calc(50% - 50vw);
+  margin-right:calc(50% - 50vw);
+
+  overflow:hidden;
+}
+
+.hero-image{
+  position:absolute;
+  inset:0;
+
+  width:100%;
+  height:100%;
+
+  object-fit:cover;
+}
+
+.hero-overlay{
+  position:absolute;
+  inset:0;
+
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(0,0,0,.15),
+      rgba(0,0,0,.35)
+    );
+}
+
+.hero-content{
+  position:absolute;
+
+  left:50%;
+  bottom:80px;
+
+  transform:translateX(-50%);
+
+  width:min(1100px,90vw);
+
+  color:white;
+
+  z-index:2;
+}
+
+.hero-content h1{
+  font-family:"Inter",sans-serif;
+
+  font-size:clamp(4rem,8vw,7rem);
+
+  line-height:.9;
+
+  letter-spacing:-.07em;
+
+  max-width:10ch;
+
+  margin-bottom:20px;
+}
+
+.hero-subtitle{
+  max-width:700px;
+
+  font-family:"Newsreader",serif;
+
+  font-size:1.6rem;
+
+  line-height:1.5;
+}
+
+.story-meta{
+  max-width:1100px;
+  margin:10px auto;
+  padding:0 24px;
+
+  display:flex;
+  gap:20px;
+
+  color:#666;
+  font-family:"Inter",sans-serif;
+  font-size:.95rem;
+}
+
+
+    /* =============================
+       CONCLUSION
+    ============================= */
+
+    .conclusion {
+      padding: 170px 0 190px;
+      border-top: 1px solid var(--border);
+      background: #fff;
+    }
+
+    .conclusion h2 {
+      max-width: 940px;
+      margin-bottom: 30px;
+      font-size: clamp(2.45rem, 5.4vw, 5.8rem);
+      line-height: 0.98;
+      letter-spacing: -0.065em;
+    }
+
+    .conclusion p {
+      max-width: 840px;
+      color: #222;
+      font-size: clamp(1.15rem, 1.4vw, 1.38rem);
+    }
+
+    /* =============================
+       ANIMATION
+    ============================= */
+
+    .fade {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 700ms ease, transform 700ms ease;
+    }
+
+    .fade.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* =============================
+       MOBILE
+    ============================= */
+
+    @media (max-width: 920px) {
+      .container,
+      .story-header {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+
+      .story-header {
+        padding-top: 92px;
+        padding-bottom: 72px;
+      }
+
+      .text-section{
+  padding:10px 0 10px;
+}
+
+      .timeline {
+        padding-top: 64px;
+        padding-bottom: 80px;
+      }
+
+      .timeline-year {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        padding: 0 0 54px;
+      }
+
+      .year-sticky {
+        position: relative;
+        top: auto;
+        padding: 44px 0 0;
+      }
+
+      .timeline-image {
+        max-width: 420px;
+      }
+
+      .timeline-step {
+        min-height: 68vh;
+        padding: 24px 0;
+      }
+
+      .step-card {
+        padding-left: 18px;
+      }
+
+      .graph-section {
+        padding: 10px 0;
+      }
+
+      .graph-layout {
+        grid-template-columns: 1fr;
+        gap: 34px;
+      }
+
+      .graph-sticky {
+        position: relative;
+        top: auto;
+        order: -1;
+      }
+
+      .graph-frame iframe,
+      .graph-placeholder {
+        min-height: 360px;
+        height: 420px;
+      }
+
+      .scroll-card {
+        min-height: auto;
+        padding: 38px 0;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .scroll-card:last-child {
+        border-bottom: 0;
+      }
+
+      .conclusion {
+        padding: 110px 0 130px;
+      }
+    }
+
+    @media (max-width: 540px) {
+      .story-header h1 {
+        letter-spacing: -0.07em;
+      }
+
+      .byline span {
+        display: block;
+        margin-top: 4px;
+      }
+
+      .year-label {
+        font-size: 3.3rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <!-- =============================================================
+      HEADER
+      Replace category, headline, subtitle, byline and date here.
+    ============================================================== -->
+    <header class="hero-header">
+
+  <img
+    class="hero-image"
+    src="images/cover.png"
+    alt="Belarusian_language_in_danger"
+  >
+
+  <div class="hero-overlay"></div>
+
+  <div class="hero-content">
+
+    <h1>Losing a Language</h1>
+
+    <p class="hero-subtitle">
+      How Belarusian disappeared from daily life but remained central to identity
+    </p>
+
+  </div>
+
+</header>
+
+<div class="story-meta">
+
+<div class="article-meta">
+  By Alina Y. · Published June 28, 2026
+</div>
+
+</div>
+
+    <!-- =============================================================
+      OPENING TEXT BLOCK
+      Replace placeholder paragraphs with reported copy.
+    ============================================================== -->
+    <section class="text-section" aria-labelledby="opening-title">
+      <div class="container">
+        <div class="text-inner fade">
+
+          <p>
+            Every 40 days, a language disappears somewhere in the world.
+          </p>
+
+          <p>
+            Belarusian has been in that danger zone for at least 16 years. UNESCO classifies it as a <b>vulnerable language</b>, meaning its long-term survival depends on whether new generations continue to learn and use it.  
+          </p>
+          <p>That designation may seem surprising. Belarusian is one of the country's two official state languages, alongside Russian. But official status does not necessarily guarantee everyday use.</p>
+          <p>
+            We traced the language's decline in daily life, the pressures it faced in public space and culture, and the signs that it may still have a future.
+          </p>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- =============================================================
+      INTERACTIVE TIMELINE
+      Each year has exactly three text steps.
+      The left year/image column stays sticky while each step scrolls into view one at a time.
+      Replace years, image placeholders, captions and text.
+    ============================================================== -->
+    <section class="timeline" aria-labelledby="timeline-title">
+      <div class="container">
+
+
+        <!-- YEAR 1: replace year, image, caption, and all three steps. -->
+        <article class="timeline-year">
+          <div class="year-sticky">
+            <div class="year-label">14th–16th centuries</div>
+            <figure class="timeline-image">
+              <div class="image-placeholder"><img src="images/Lithuanian_Statute_I.jpg" alt="The First Lithuanian Statute (1529)" /></div>
+              <figcaption>
+                The First Lithuanian Statute (1529)
+              </figcaption>
+            </figure>
+          </div>
+
+          <div class="timeline-scroll">
+            <div class="timeline-step fade">
+              <div class="step-card">
+                <h2>A Language Older Than the Belarusian State</h2>
+                <p></p>
+                <p>
+                  Belarusian emerged from the East Slavic dialects spoken across the lands of the Grand Duchy of Lithuania. 
+                  Between the 14th and 16th centuries, an early form of the language served as the language of administration, law and government.
+                </p>
+                <p>
+                  This was not merely the language of folklore or local traditions. 
+                  It was used by the chancery of one of Eastern Europe's largest states.
+                </p>
+              </div>
+            </div>
+
+
+          </div>
+        </article>
+
+
+        <!-- YEAR 3 -->
+        <article class="timeline-year">
+          <div class="year-sticky">
+            <div class="year-label">16th-20th centuries</div>
+            <figure class="timeline-image">
+              <div class="image-placeholder"><img src="images/russian_empire.jpg" alt="Belarus and Ukraine in 1775" /></div>
+              <figcaption>
+                Belarus and Ukraine in 1775
+                // Credit: @georgian.maps
+              </figcaption>
+            </figure>
+          </div>
+
+          <div class="timeline-scroll">
+            <div class="timeline-step fade">
+              <div class="step-card">
+                <h2>Between Empires</h2>
+                <p></p>
+                <p>
+                  The following centuries brought repeated pressure from more powerful state languages.
+                </p>
+                <p>
+                  After the partitions of the Polish-Lithuanian Commonwealth in 1772, 1793 and 1795, Belarusian lands became part of the Russian Empire, 
+                  where <b>Russian gradually displaced Belarusian from education, administration and publishing</b>.
+                </p>
+              </div>
+            </div>
+
+            <div class="timeline-step fade">
+              <div class="step-card">
+
+                <p>
+                  In interwar Poland, Belarusian schools and cultural organizations faced policies of Polonization. 
+                  In the Soviet Union, a brief period of Belarusianization in the 1920s was followed by <b>repression against national intellectuals</b> 
+                  and the growing dominance of Russian.
+                </p>
+                <p>By the end of the 20th century, Belarusian remained an important marker of culture and identity, 
+                  but had lost much of its presence in cities, education and public life.</p>
+              </div>
+            </div>
+
+            
+          </div>
+        </article>
+
+        <!-- YEAR 4 -->
+        <article class="timeline-year">
+          <div class="year-sticky">
+            <div class="year-label">1990s</div>
+            <figure class="timeline-image">
+              <div class="image-placeholder"><img src="images/1990.jpeg" alt="Belarusian language protest" /></div>
+              <figcaption>
+                Belarusian language protests // Source: nashaniva.com
+              </figcaption>
+            </figure>
+          </div>
+
+          <div class="timeline-scroll">
+            <div class="timeline-step fade">
+              <div class="step-card">
+                <h2>A Brief Renaissance</h2>
+                <p></p>
+                <p>
+                  The collapse of the Soviet Union seemed to offer a different future.
+                </p>
+                <p>During the early 1990s, Belarusian experienced a revival. 
+                  The language returned to schools, universities, media outlets and government institutions.</p>
+                <p>On March 15, 1994, the first Constitution of independent Belarus <b>established Belarusian as the country's sole state language.</b> 
+                  For a brief moment, Belarusian became not only a language of culture and memory, but also the language of the state.
+</p>
+              </div>
+            </div>
+
+            
+          </div>
+        </article>
+
+        <!-- YEAR 5 -->
+        <article class="timeline-year">
+          <div class="year-sticky">
+            <div class="year-label">1994</div>
+            <figure class="timeline-image">
+              <div class="image-placeholder"><img src="images/luka.jpg" alt="Aleksandr Lukashenko" /></div>
+              <figcaption>
+                Aleksandr Lukashenko
+              </figcaption>
+            </figure>
+          </div>
+
+          <div class="timeline-scroll">
+            <div class="timeline-step fade">
+              <div class="step-card">
+                <h2>Everything Changed in the Mid-1990s</h2>
+                <p></p>
+                <p>In July 1994, Alexander Lukashenko was elected Belarus's first president. More than three decades later, he remains in power. 
+                </p><p></p>
+              <aside class="graph-sticky">
+            <div class="graph-frame">
+              <!-- Replace this placeholder with an iframe when ready. -->
+              <p></p><iframe src='https://flo.uri.sh/visualisation/29478437/embed' title='Interactive or visual content' class='flourish-embed-iframe' frameborder='0' scrolling='no' style='width:90%;height:510px;' sandbox='allow-same-origin allow-forms allow-scripts allow-downloads allow-popups allow-popups-to-escape-sandbox allow-top-navigation-by-user-activation'></iframe>
+            </div>
+            <!-- <div class="graph-caption">
+              Placeholder caption: language of instruction, source note, methodology note.
+            </div> -->
+          </aside>
+                </div>
+            </div>
+
+            <div class="timeline-step fade">
+              <div class="step-card">
+                
+                <p>
+                  Less than a year after Lukashenko's election, Belarus held a national referendum. 
+                  One of the questions asked voters whether Russian should receive equal status with Belarusian.
+                </p>
+                <p><b>On May 14, 1995, Russian became a state language alongside Belarusian.</b></p>
+                <p>The decision marked a turning point in the country's language policy.</p>
+
+              </div>
+            </div>
+
+            <div class="timeline-step fade">
+              <div class="step-card">
+                
+                <p>Over the following decades, Russian strengthened its position in cities, government institutions, media and everyday communication. 
+                  Belarusian retained its official status, but its presence in public life gradually diminished.</p>
+
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- =============================================================
+      TRANSITION TEXT BLOCK
+    ============================================================== -->
+    <section class="text-section" aria-labelledby="transition-title">
+      <div class="container">
+        <div class="text-inner centered fade">
+
+          <h2 id="transition-title">A Native Language Spoken Less and Less</h2>
+          <p>
+            The consequences of those policy changes can be seen in Belarus's census data. For decades, Belarusians were asked two separate questions: what language they considered their native language, and what language they actually spoke at home.
+  The gap between those answers tells the story of modern Belarusian better than almost any political speech.
+
+          </p>
+        </div>
+      </div>
+    </section>
+
+
+      <div class="container">
+
+
+        <div class="graph-layout">
+          <div class="scroll-column">
+            <div class="scroll-card fade">
+
+              <p>
+                In 1999, more than 7.4 million people said Belarusian was their native language. 
+                <b>Ten years later, that number had fallen to just over 5 million.</b>
+                By 2019, it remained largely unchanged at about 5.1 million.
+              </p>
+            </div>
+
+            <div class="scroll-card fade">
+
+              <p>
+                During the same period, the number of people who identified Russian as their native language <b>grew from 2.4 million to nearly 4 million.</b>
+              </p>
+            </div>
+
+
+          </div>
+
+          <aside class="graph-sticky">
+            <div class="graph-frame">
+              <!-- Replace this placeholder with an iframe when ready. -->
+              <iframe src='https://flo.uri.sh/visualisation/29479162/embed' title='Interactive or visual content' class='flourish-embed-iframe' frameborder='0' scrolling='no' style='width:100%;height:400px;' sandbox='allow-same-origin allow-forms allow-scripts allow-downloads allow-popups allow-popups-to-escape-sandbox allow-top-navigation-by-user-activation'></iframe></script>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+<section class="graph-break">
+  <div class="container">
+    <div class="graph-break-inner">
+
+      <p class="break-lead">
+        Yet the bigger shift appears not in identity, but in everyday life.
+      </p>
+
+      <p>
+By 2019, more than 6.7 million people — about 71% of Belarus's population — reported speaking Russian at home.     </p>
+
+    </div>
+  </div>
+</section>
+    
+    <!-- GRAPH SECTION 2 -->
+
+      <div class="container">
+        <div class="graph-header fade">
+
+        </div>
+
+        <div class="graph-layout">
+          <div class="scroll-column">
+            <div class="scroll-card fade">
+              
+              <p>
+        In 1999, about <b>3.7 million</b> Belarusians said they <b>spoke Belarusian at home</b>. 
+        By 2009, that figure had nearly halved, <b>falling to 2.2 million</b>. 
+              </p>
+            </div>
+
+
+
+            <div class="scroll-card fade">
+              <p>
+                The result is one of the central paradoxes of modern Belarus. 
+                Millions of people continue to consider Belarusian their native language. Far fewer use it in their daily lives.
+              </p>
+            </div>
+          </div>
+
+          <aside class="graph-sticky">
+            <div class="graph-frame">
+              <iframe src='https://flo.uri.sh/visualisation/29479248/embed' title='Interactive or visual content' class='flourish-embed-iframe' frameborder='0' scrolling='no' style='width:100%;height:400px;' sandbox='allow-same-origin allow-forms allow-scripts allow-downloads allow-popups allow-popups-to-escape-sandbox allow-top-navigation-by-user-activation'></iframe>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+<section class="text-section" aria-labelledby="transition-title">
+  <div class="container">
+    <div class="text-inner centered fade">
+
+      <h2 id="transition-title">
+        How Belarusian Disappeared From Schools
+      </h2>
+
+        <p>
+                Unlike the family, schools are shaped directly by state policy. 
+                As a result, changes in education often provide one of the clearest indicators of a language's future.
+              </p>              
+                <p>
+                According to the Ministry of Education, roughly 40 percent of schools in Belarus still use Belarusian as the language of instruction. 
+                At first glance, that figure suggests the language remains widespread.
+              </p>
+                            <p>
+                The reality is different.
+              </p>
+
+    </div>
+  </div>
+</section>
+    <!-- GRAPH SECTION 3 -->
+    <section class="graph-section" aria-labelledby="graph-3-title">
+      <div class="container">
+
+        <div class="graph-layout">
+          <div class="scroll-column">
+            <div class="scroll-card fade">
+             
+              <p>Most Belarusian-language schools are small rural schools serving relatively few students. 
+                As a result, <b>only about 10 percent</b> of Belarusian schoolchildren <b>receive their education in Belarusian.</b></p>
+            </div>
+
+
+
+            <div class="scroll-card fade">
+              
+              <p>
+                The decline was not limited to education. It was also reflected in book publishing, newspapers and magazines — institutions that historically played a key role in keeping the language visible in public life.
+              </p>
+            </div>
+          </div>
+
+          <aside class="graph-sticky">
+            <div class="graph-frame">
+              <iframe src='https://flo.uri.sh/visualisation/29479502/embed' title='Interactive or visual content' class='flourish-embed-iframe' frameborder='0' scrolling='no' style='width:100%;height:500px;' sandbox='allow-same-origin allow-forms allow-scripts allow-downloads allow-popups allow-popups-to-escape-sandbox allow-top-navigation-by-user-activation'></iframe>
+            </div>
+
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION SECTION 4 -->
+    <section class="text-section" aria-labelledby="transition-title">
+      <div class="container">
+        <div class="text-inner centered fade">
+          <h2 id="graph-4-title">The Internet Speaks Russian</h2>
+
+      <p>
+        If Belarusian was gradually disappearing from schools, books and newspapers, what happened to it online? To answer that question, we analyzed Google search behavior in Belarus over the past decade.
+      </p>
+
+      <p>
+        Using Google Trends, we compared 33 pairs of everyday search terms in Belarusian and Russian. 
+        The list included words people might use when looking for a job, an apartment, medical care, shopping information or daily news — 
+        terms such as "работа" / "праца" (job), "новости" / "навіны" (news), "квартира" / "кватэра" (apartment) and "врач" / "лекар" (doctor).
+      </p>
+
+          </div>
+       </div>
+    </section>
+
+    <!-- GRAPH SECTION -->
+     
+    <div class="container">
+      <div class="graph-layout">
+          <div class="scroll-column">
+            <div class="scroll-card fade">
+              <p>
+                Throughout the entire period from 2015 to 2025, Russian-language searches overwhelmingly outnumbered their Belarusian equivalents.
+              </p>
+            </div>
+
+            <div class="scroll-card fade">
+              <p>
+                In 2015, Russian forms appeared roughly <b>427 times more often</b> than Belarusian ones. By 2023, that gap had widened to <b>853 to 1</b>, the largest difference observed in the data. 
+                Even in 2025, Russian-language searches were still more than <b>580 times</b> more common.
+              </p>
+            </div>
+          </div>
+
+          <aside class="graph-sticky">
+            <div class="graph-frame">
+              <iframe src='https://flo.uri.sh/visualisation/29479679/embed' title='Interactive or visual content' class='flourish-embed-iframe' frameborder='0' scrolling='no' style='width:100%;height:600px;' sandbox='allow-same-origin allow-forms allow-scripts allow-downloads allow-popups allow-popups-to-escape-sandbox allow-top-navigation-by-user-activation'></iframe>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </div>  
+    </section>
+
+     <!-- GRAPH SECTION 5 -->
+    <section class="graph-section" aria-labelledby="graph-4-title">
+      <div class="container">
+        <div class="text-inner fade">
+          <h2 id="graph-4-title">Culture Under Pressure</h2>
+        </div>
+    <div class="section-intro fade">
+
+
+
+
+    </div>
+        <div class="graph-layout">
+          <div class="scroll-column">
+<div class="scroll-card fade">
+                    <p>
+After the disputed 2020 presidential election, Belarus experienced the largest protests in its modern history. 
+The authorities responded with mass arrests and a sweeping crackdown that extended beyond politics to independent media, civil society and the cultural sphere.      </p>
+            
+            <figure class="timeline-image">
+<img src="images/protest.jpeg" alt="The First Lithuanian Statute (1529)" />
+<figcaption>
+                Protests 2020 in Belarus // Source: Nexta
+              </figcaption>
+              </figure>
+</div>
+            
+                        <div class="scroll-card fade">
+                    <p>
+According to the Belarusian Council for Culture, the number of cultural figures sentenced to prison terms has increased almost every year since 2021.
+      </p>
+            </div>
+            <div class="scroll-card fade">
+              <p>
+In 2021, the organization recorded six cultural workers <b>serving prison sentences.</b>
+By 2024, that number had risen to 22. In 2025, <b>it reached 31</b> — the highest figure in the monitoring period.              </p>
+            </div>
+
+          </div>
+
+          <aside class="graph-sticky">
+            <div class="graph-frame">
+              <iframe src='https://flo.uri.sh/visualisation/29479766/embed' title='Interactive or visual content' class='flourish-embed-iframe' frameborder='0' scrolling='no' style='width:100%;height:400px;' sandbox='allow-same-origin allow-forms allow-scripts allow-downloads allow-popups allow-popups-to-escape-sandbox allow-top-navigation-by-user-activation'></iframe>            </div>
+
+          </aside>
+        </div>
+      </div>
+    </section>
+
+
+
+    <!-- GRAPH SECTION 5.5 -->
+    <section class="graph-section" aria-labelledby="graph-4-title">
+      <div class="container">
+    <div class="section-intro fade">
+
+      <p>
+We also analyzed PEN Belarus data on books added to Belarus's official list of "extremist materials."
+      </p>
+
+      <p>
+        Of the 105 literary works included in the register, 77 were written in Belarusian. Only 28 were in Russian. The figures suggest that restrictions have disproportionately affected Belarusian-language literature.
+      </p>
+<iframe src='https://flo.uri.sh/visualisation/29486703/embed' title='Interactive or visual content' class='flourish-embed-iframe' frameborder='0' scrolling='no' style='width:100%;height:200px;' sandbox='allow-same-origin allow-forms allow-scripts allow-downloads allow-popups allow-popups-to-escape-sandbox allow-top-navigation-by-user-activation'></iframe>            </div>
+
+    </div>
+
+        </div>
+      </div>
+    </section>
+    
+     <!-- GRAPH SECTION 6 -->
+    <section class="text-section" aria-labelledby="transition-title">
+      <div class="container">
+        <div class="text-inner centered fade">
+          <h2 id="transition-title">A Different Story Emerges</h2>
+          <p>
+    At this point, the picture looks almost hopeless. But Google Trends data revealed another trend. 
+          </p>
+
+          <p>
+            We compiled a second dataset focused not on everyday needs, but on Belarusian language, literature, history and national identity.
+
+          </p>
+          <p>The list included searches for terms such as "беларуская мова" (Belarusian language), "тарашкевіца" (a traditional Belarusian orthography), writers including Yanka Kupala and Uladzimir Karatkevich, historical topics such as the Grand Duchy of Lithuania and the Belarusian People's Republic, and national symbols including the Pahonia coat of arms and the white-red-white flag.
+          </p>
+        </div>
+      </div>
+    </section>
+    <div class="container">
+        <div class="graph-layout">
+          <div class="scroll-column">
+            <div class="scroll-card fade">
+              <p>
+                Here, the pattern was entirely different.           </p>
+              <p>
+                From 2015 to 2019, interest remained relatively stable. Then, beginning in 2020, <b>search activity started to rise sharply.</b>
+              </p>
+            </div>
+
+            <div class="scroll-card fade">
+              <p>
+                The trend peaked in 2022, when average interest in Belarusian language, culture and history was roughly 50 percent higher than in the late 2010s.              </p>
+            </div>
+          </div>
+
+          <aside class="graph-sticky">
+            <div class="graph-frame">
+                  <iframe src='https://flo.uri.sh/visualisation/29479856/embed' title='Interactive or visual content' class='flourish-embed-iframe' frameborder='0' scrolling='no' style='width:100%;height:400px;' sandbox='allow-same-origin allow-forms allow-scripts allow-downloads allow-popups allow-popups-to-escape-sandbox allow-top-navigation-by-user-activation'></iframe>            </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+
+  </main>
+
+  <script>
+    /*
+      Lightweight reveal animation.
+      Remove this script if your publishing platform already controls scroll animation.
+    */
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+          }
+        });
+      },
+      { threshold: 0.16 }
+    );
+
+    document.querySelectorAll(".fade").forEach(element => observer.observe(element));
+  </script>
+  <!-- CARDS -->
+   <style>
+.words-section {
+  max-width: 980px;
+  margin: 60px auto;
+  font-family: Georgia, 'Times New Roman', serif;
+}
+
+.words-section h2 {
+  font-size: 34px;
+  margin-bottom: 10px;
+}
+
+.words-section p.intro {
+  font-size: 18px;
+  line-height: 1.5;
+  color: #444;
+  max-width: 720px;
+  margin-bottom: 35px;
+}
+
+.word-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 22px;
+}
+
+.word-card {
+  perspective: 1000px;
+  cursor: pointer;
+  min-height: 260px;
+}
+
+.word-inner {
+  position: relative;
+  width: 100%;
+  min-height: 260px;
+  transition: transform 0.7s;
+  transform-style: preserve-3d;
+}
+
+.word-card.flipped .word-inner {
+  transform: rotateY(180deg);
+}
+
+.word-front, .word-back {
+  position: absolute;
+  width: 100%;
+  min-height: 260px;
+  backface-visibility: hidden;
+  border: 1px solid #ddd;
+  border-radius: 18px;
+  padding: 26px;
+  box-sizing: border-box;
+  background: #faf7f0;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+.word-front {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.word-back {
+  transform: rotateY(180deg);
+  background: #ffffff;
+}
+
+.word {
+  font-size: 40px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.pronunciation {
+  font-size: 18px;
+  color: #666;
+  margin-bottom: 18px;
+}
+
+.listen {
+  border: none;
+  background: #111;
+  color: white;
+  padding: 9px 14px;
+  border-radius: 999px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.listen:hover {
+  background: #333;
+}
+
+.translation {
+  font-size: 21px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.explanation {
+  font-size: 17px;
+  line-height: 1.45;
+  color: #333;
+}
+
+.note {
+  font-size: 13px;
+  color: #777;
+  margin-top: 18px;
+}
+</style>
+
+<section class="words-section">
+  <h2>Words That Carry a World of Their Own</h2>
+  <p class="intro">
+    One reason people keep returning to the language is that Belarusian preserves words that describe experiences, 
+    landscapes and traditions that other languages often need entire phrases to explain.
+  </p>
+
+  <div class="word-grid">
+
+    <div class="word-card" onclick="flipCard(this)">
+      <div class="word-inner">
+        <div class="word-front">
+          <div class="word">Вырай</div>
+          <div class="pronunciation">[vee-rai]</div>
+          <button class="listen" onclick="speakWord(event, 'Вырай')">🔊 Listen</button>
+          <div class="note">Click to reveal</div>
+        </div>
+        <div class="word-back">
+          <div class="translation">Vyrai </div>
+          <div class="explanation">
+            The warm land where birds spend winter
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="word-card" onclick="flipCard(this)">
+      <div class="word-inner">
+        <div class="word-front">
+          <div class="word">Знічка</div>
+          <div class="pronunciation">[znich-ka]</div>
+          <button class="listen" onclick="speakWord(event, 'Знічка')">🔊 Listen</button>
+          <div class="note">Click to reveal</div>
+        </div>
+        <div class="word-back">
+          <div class="translation">Znichka</div>
+          <div class="explanation">
+            A shooting star
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="word-card" onclick="flipCard(this)">
+      <div class="word-inner">
+        <div class="word-front">
+          <div class="word">Талака</div>
+          <div class="pronunciation">[ta-la-ka]</div>
+          <button class="listen" onclick="speakWord(event, 'Талака')">🔊 Listen</button>
+          <div class="note">Click to reveal</div>
+        </div>
+        <div class="word-back">
+          <div class="translation">Talaka</div>
+          <div class="explanation">
+            Collective help from the community
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="word-card" onclick="flipCard(this)">
+      <div class="word-inner">
+        <div class="word-front">
+          <div class="word">Неруш</div>
+          <div class="pronunciation">[ne-rush]</div>
+          <button class="listen" onclick="speakWord(event, 'Неруш')">🔊 Listen</button>
+          <div class="note">Click to reveal</div>
+        </div>
+        <div class="word-back">
+          <div class="translation">Nerush</div>
+          <div class="explanation">
+            Untouched wilderness
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="word-card" onclick="flipCard(this)">
+      <div class="word-inner">
+        <div class="word-front">
+          <div class="word">Паняверка</div>
+          <div class="pronunciation">[pa-nya-ver-ka]</div>
+          <button class="listen" onclick="speakWord(event, 'Паняверка')">🔊 Listen</button>
+          <div class="note">Click to reveal</div>
+        </div>
+        <div class="word-back">
+          <div class="translation">Paniaverka</div>
+          <div class="explanation">
+            A loss of faith
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="word-card" onclick="flipCard(this)">
+      <div class="word-inner">
+        <div class="word-front">
+          <div class="word">Маладзік</div>
+          <div class="pronunciation">[ma-la-dzik]</div>
+          <button class="listen" onclick="speakWord(event, 'Маладзік')">🔊 Listen</button>
+          <div class="note">Click to reveal</div>
+        </div>
+        <div class="word-back">
+          <div class="translation">Maladzik</div>
+          <div class="explanation">
+            The young growing moon
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+function flipCard(card) {
+  card.classList.toggle("flipped");
+}
+
+function speakWord(event, word) {
+  event.stopPropagation();
+
+  const utterance = new SpeechSynthesisUtterance(word);
+  utterance.lang = "be-BY";
+  utterance.rate = 0.8;
+
+  window.speechSynthesis.cancel();
+  window.speechSynthesis.speak(utterance);
+}
+</script>
+
+<section class="graph-break">
+  <div class="container">
+    <div class="graph-break-inner">
+
+      <p class="break-lead">
+        Methodology
+      </p>
+<p>
+  This story combines historical sources with original data analysis. I used
+  <a href="https://census.belstat.gov.by/saiku/?guest=true&lang=ru&default_view_state=edit#query/open//public/F503N_ru.saiku" target="_blank" rel="noopener noreferrer">Belarusian census data</a>,
+  <a href="https://dataportal.belstat.gov.by/osids/indicator-info/10103000022" target="_blank" rel="noopener noreferrer">statistics</a> from the Ministry of Education,
+  <a href="https://byculture.org/represii/" target="_blank" rel="noopener noreferrer">monitoring data</a> from the Belarusian Council for Culture,
+  and PEN Belarus's 
+  <a href="https://bannedbooks.penbelarus.org/extremist_list/" target="_blank" rel="noopener noreferrer">register of books designated as “extremist materials”</a>.
+</p>
+
+  <p>
+    To analyze online language use, I collected Google Trends data for Belarus
+    using the <strong><a href="https://pypi.org/project/pytrends/" target="_blank" rel="noopener noreferrer">Pytrends</a></strong> library in Python. I compared 33 pairs
+    of equivalent Belarusian- and Russian-language search queries from 2015 to
+    2025 and compiled a second dataset of searches related to Belarusian
+    language, literature, history, and national identity. Google Trends data
+    was aggregated into yearly averages using <strong>pandas</strong>.
+  </p>
+
+  <p>
+    To examine the language of books included in the extremist materials
+    register, I parsed the bibliography with
+    <strong>regular expressions (<code>re</code>)</strong> and classified titles
+    using a <strong>custom rule-based language detector</strong> based on
+    Belarusian- and Russian-specific orthographic and lexical features.
+  </p>
+
+
+  <p> I also built a small interactive glossary in HTML, CSS, and JavaScript featuring Belarusian words that have no direct English equivalent. Each card uses a CSS flip animation, while the pronunciation is generated with the browser's Web Speech API. </p>
+    <p>
+    Data cleaning and analysis were performed in Python using
+    <strong>pandas</strong>, while visualizations were created in
+    <strong>Flourish</strong>. The complete code and methodology are available
+    on my GitHub.
+  </p>  
+</div>
+  </div>
+</section>
+</body>
+</html>
+
