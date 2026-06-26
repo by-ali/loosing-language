@@ -59,7 +59,7 @@
     language of each title, I built a custom rule-based classifier that
     identifies Belarusian and Russian using language-specific letters,
     orthographic patterns and common vocabulary instead of a general-purpose
-    language detection model.
+    language detection model. Unfortunately, this classifier is tailored specifically to this dataset of books and would not perform well on arbitrary datasets.
   </p>
 
   <p>
