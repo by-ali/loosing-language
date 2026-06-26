@@ -70,7 +70,7 @@
 
   <p>   
     The interactive glossary at the end of the story
-    was built with HTML, CSS and vanilla JavaScript and uses the browser's
+    was built with HTML, CSS and JavaScript and uses the browser's
     <strong>Web Speech API</strong> to generate Belarusian pronunciation.
   </p>
 
